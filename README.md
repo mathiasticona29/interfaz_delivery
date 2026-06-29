@@ -314,8 +314,8 @@ SQL> SELECT COUNT(*) FROM restaurantes;
 ## 📬 Contacto
 
 Para dudas sobre el proyecto:
-- **Mathias Ticona:** ticona_am@urp.edu.pe
-- **Alejandro Briceño:** briceño_aj@urp.edu.pe
+- **Mathias Ticona:** mathias.ticona@urp.edu.pe
+- **Alejandro Briceño:** 202112454@urp.edu.pe
 
 ---
 
