@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeliveryFood — Carritos</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .filter-bar { display:flex; gap:.5rem; margin-bottom:1.25rem; flex-wrap:wrap }
+    .filter-btn { padding:.4rem 1rem; border-radius:20px; border:1px solid #2d3148; background:transparent; color:#94a3b8; cursor:pointer; font-size:.85rem; text-decoration:none; transition:all .2s }
+    .filter-btn:hover, .filter-btn.active { background:#f97316; border-color:#f97316; color:#fff }
+    .badge-activo    { background:#14532d; color:#4ade80 }
+    .badge-pagado    { background:#1e3a5f; color:#60a5fa }
+    .badge-abandonado{ background:#450a0a; color:#f87171 }
+    .items-list { font-size:.8rem; color:#64748b; line-height:1.6 }
+    td.actions  { white-space:nowrap }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/">🍔 DeliveryFood</a>
+  <div class="nav-links">
+    <a href="/">Dashboard</a>
+    <a href="/menu">Menú <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/carrito" class="active">Carrito <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/cobros">Cobros <span class="nav-badge badge-oracle">Oracle</span></a>
+    <a href="/restaurantes">Restaurantes <span class="nav-badge badge-oracle">Oracle</span></a>
+  </div>
+</nav>
+<main>
+  <div class="header-section">
+    <div>
+      <div class="page-title">🛒 Carritos de Compra</div>
+      <div class="page-subtitle">Colección <strong>Carrito</strong> — MongoDB | TTL: 2 h | <%= carritos.length %> registros</div>
+    </div>
+    <form action="/carrito/simular" method="POST">
+      <button type="submit" class="btn-action btn-action-green">⚡ Simular Registro NoSQL</button>
+    </form>
+  </div>
+ 
+  <div class="filter-bar">
+    <a href="/carrito"                  class="filter-btn <%= estado===''          ?'active':'' %>">Todos</a>
+    <a href="/carrito?estado=ACTIVO"    class="filter-btn <%= estado==='ACTIVO'    ?'active':'' %>">Activos</a>
+    <a href="/carrito?estado=PAGADO"    class="filter-btn <%= estado==='PAGADO'    ?'active':'' %>">Pagados</a>
+    <a href="/carrito?estado=ABANDONADO"class="filter-btn <%= estado==='ABANDONADO'?'active':'' %>">Abandonados</a>
+  </div>
+ 
+  <div class="card">
+    <% if(carritos.length === 0) { %>
+      <div class="empty">🛒 No hay carritos<%= estado ? ' con estado ' + estado : '' %>.<br><small>Usa el botón "Simular" para crear uno.</small></div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Restaurante</th>
+            <th>Ítems</th>
+            <th>Monto</th>
+            <th>Estado</th>
+            <th>Última Act.</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% carritos.forEach(c => { %>
+          <tr>
+            <td>#<%= c.usuario_id %></td>
+            <td>#<%= c.restaurante_id %></td>
+            <td>
+              <div class="items-list">
+                <% (c.items||[]).slice(0,2).forEach(item => { %>
+                  <%= item.nombre_plato %> ×<%= item.cantidad %><br>
+                <% }) %>
+                <% if((c.items||[]).length > 2) { %>
+                  <span style="color:#475569">+<%= c.items.length - 2 %> más</span>
+                <% } %>
+              </div>
+            </td>
+            <td class="monto">S/ <%= (c.monto_total||0).toFixed(2) %></td>
+            <td><span class="badge badge-<%= c.estado.toLowerCase() %>"><%= c.estado %></span></td>
+            <td style="font-size:.8rem;color:#64748b"><%= new Date(c.ultima_actualizacion).toLocaleString('es-PE') %></td>
+            <td class="actions">
+              <form action="/carrito/<%= c._id %>/delete" method="POST" style="display:inline"
+                    onsubmit="return confirm('¿Eliminar este carrito?')">
+                <button type="submit" class="btn-mini btn-mini-red" title="Eliminar">🗑</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+</main>
+ 
+<div class="toast" id="toast">✅ Operación ejecutada correctamente</div>
+<script>
+  if(new URLSearchParams(window.location.search).get('ok')){
+    const t = document.getElementById('toast');
+    t.style.display = 'flex';
+    setTimeout(() => t.style.display = 'none', 3000);
+  }
+</script>
+</body>
+</html>

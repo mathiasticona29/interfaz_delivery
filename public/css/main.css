@@ -1,0 +1,270 @@
+/* ── Reset & base ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #0f1117;
+    color: #e2e8f0;
+    min-height: 100vh
+}
+
+/* ── Navbar ─────────────────────────────────────────────────────── */
+nav {
+    background: #1a1d2e;
+    border-bottom: 1px solid #2d3148;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100
+}
+
+.nav-brand {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f97316;
+    text-decoration: none
+}
+
+.nav-links {
+    display: flex;
+    gap: .25rem;
+    margin-left: auto
+}
+
+.nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    padding: .4rem .9rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    transition: all .2s
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: #2d3148;
+    color: #f97316
+}
+
+.nav-badge {
+    font-size: .65rem;
+    padding: .15rem .4rem;
+    border-radius: 4px;
+    margin-left: .3rem;
+    font-weight: 600
+}
+
+.badge-mongo {
+    background: #14532d;
+    color: #4ade80
+}
+
+.badge-oracle {
+    background: #1e1b4b;
+    color: #818cf8
+}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: .25rem
+}
+
+.page-subtitle {
+    color: #64748b;
+    font-size: .9rem;
+    margin-bottom: 1.5rem
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem
+}
+
+.header-section .page-subtitle {
+    margin-bottom: 0
+}
+
+/* ── Cards & tables ─────────────────────────────────────────────── */
+.card {
+    background: #1a1d2e;
+    border: 1px solid #2d3148;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid #2d3148
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f1f5f9
+}
+
+.table-wrap {
+    overflow-x: auto
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem
+}
+
+th {
+    background: #0f1117;
+    color: #64748b;
+    font-weight: 600;
+    text-align: left;
+    padding: .75rem 1rem;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .05em
+}
+
+td {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #1e2236;
+    color: #cbd5e1;
+    vertical-align: middle
+}
+
+tr:hover td {
+    background: #1e2236
+}
+
+/* ── Shared components ───────────────────────────────────────────── */
+.badge {
+    display: inline-block;
+    padding: .2rem .6rem;
+    border-radius: 9999px;
+    font-size: .75rem;
+    font-weight: 600
+}
+
+.monto {
+    color: #f97316;
+    font-weight: 700
+}
+
+.metodo {
+    font-size: .8rem;
+    background: #2d3148;
+    padding: .1rem .5rem;
+    border-radius: 4px;
+    color: #94a3b8
+}
+
+.empty {
+    text-align: center;
+    padding: 3rem;
+    color: #475569
+}
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn-action {
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    border-width: 1px;
+    border-style: solid
+}
+
+.btn-action-green {
+    background: #14532d;
+    color: #4ade80;
+    border-color: #166534
+}
+
+.btn-action-green:hover {
+    background: #166534;
+    color: #fff
+}
+
+.btn-action-purple {
+    background: #1e1b4b;
+    color: #818cf8;
+    border-color: #312e81
+}
+
+.btn-action-purple:hover {
+    background: #312e81;
+    color: #fff
+}
+
+.btn-mini {
+    background: #1e3a5f;
+    color: #60a5fa;
+    border: 1px solid #1e40af;
+    padding: .18rem .55rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    cursor: pointer;
+    transition: all .2s
+}
+
+.btn-mini:hover {
+    background: #1e40af;
+    color: #fff
+}
+
+.btn-mini-red {
+    background: #450a0a;
+    color: #f87171;
+    border-color: #7f1d1d
+}
+
+.btn-mini-red:hover {
+    background: #7f1d1d;
+    color: #fff
+}
+
+/* ── Toast notification ──────────────────────────────────────────── */
+.toast {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #14532d;
+    color: #4ade80;
+    border: 1px solid #166534;
+    padding: .75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 9999;
+    align-items: center;
+    gap: .5rem;
+    font-size: .9rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .4)
+}

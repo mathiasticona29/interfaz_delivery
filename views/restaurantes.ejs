@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeliveryFood — Restaurantes</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .badge-si { background:#14532d; color:#4ade80 }
+    .badge-no { background:#450a0a; color:#f87171 }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/">🍔 DeliveryFood</a>
+  <div class="nav-links">
+    <a href="/">Dashboard</a>
+    <a href="/menu">Menú <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/carrito">Carrito <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/cobros">Cobros <span class="nav-badge badge-oracle">Oracle</span></a>
+    <a href="/restaurantes" class="active">Restaurantes <span class="nav-badge badge-oracle">Oracle</span></a>
+  </div>
+</nav>
+<main>
+  <div class="page-title">🏪 Restaurantes</div>
+  <div class="page-subtitle">Tabla <strong>RESTAURANTES</strong> — Oracle XE | <%= restaurantes.length %> registros</div>
+ 
+  <div class="card">
+    <% if(restaurantes.length === 0) { %>
+      <div class="empty">⚠️ No se pudo conectar a Oracle o no hay datos.<br><small>Verifica que Oracle XE esté corriendo.</small></div>
+    <% } else { %>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Razón Social</th>
+            <th>RUC</th>
+            <th>Cuenta Bancaria</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% restaurantes.forEach(r => { %>
+          <tr>
+            <td style="color:#475569"><%= r.ID_RESTAURANTE %></td>
+            <td style="font-weight:500"><%= r.RAZON_SOCIAL %></td>
+            <td style="font-size:.8rem;color:#64748b"><%= r.RUC %></td>
+            <td style="font-size:.8rem;color:#64748b"><%= r.CUENTA_BANCARIA || '—' %></td>
+            <td><span class="badge badge-<%= r.ESTADO==='ACTIVO'?'si':'no' %>"><%= r.ESTADO %></span></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+</main>
+</body>
+</html>

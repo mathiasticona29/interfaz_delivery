@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DeliveryFood BD2 — Dashboard</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    .stat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-bottom:2rem }
+    .stat-card { background:#1a1d2e; border:1px solid #2d3148; border-radius:12px; padding:1.5rem; text-align:center; text-decoration:none; display:block; transition:all .2s }
+    .stat-card:hover { border-color:#f97316; transform:translateY(-2px) }
+    .stat-icon  { font-size:2rem; margin-bottom:.5rem }
+    .stat-value { font-size:2.5rem; font-weight:700; color:#f97316 }
+    .stat-label { font-size:.85rem; color:#64748b; margin-top:.25rem }
+    .stat-source{ font-size:.75rem; margin-top:.5rem }
+    .arch-grid  { display:grid; grid-template-columns:1fr 1fr; gap:1rem }
+    .arch-item  { background:#0f1117; border-radius:8px; padding:1rem }
+    .arch-db    { font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.5rem }
+    .arch-db.mongo  { color:#4ade80 }
+    .arch-db.oracle { color:#818cf8 }
+    .arch-col  { display:flex; justify-content:space-between; align-items:center; padding:.3rem 0; border-bottom:1px solid #1e2236; font-size:.85rem }
+    .arch-col:last-child { border-bottom:none }
+    .arch-note { font-size:.75rem; color:#475569; margin-top:.5rem }
+    .arch-count{ background:#2d3148; padding:.1rem .5rem; border-radius:4px; font-size:.75rem; color:#94a3b8 }
+    @media(max-width:600px){ .arch-grid{ grid-template-columns:1fr } }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="/">🍔 DeliveryFood</a>
+  <div class="nav-links">
+    <a href="/" class="active">Dashboard</a>
+    <a href="/menu">Menú <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/carrito">Carrito <span class="nav-badge badge-mongo">Mongo</span></a>
+    <a href="/cobros">Cobros <span class="nav-badge badge-oracle">Oracle</span></a>
+    <a href="/restaurantes">Restaurantes <span class="nav-badge badge-oracle">Oracle</span></a>
+  </div>
+</nav>
+<main>
+  <div class="page-title">Dashboard</div>
+  <div class="page-subtitle">Persistencia Políglota — MongoDB + Oracle | Proyecto BD2 URP 2026-I</div>
+ 
+  <div class="stat-grid">
+    <a class="stat-card" href="/menu">
+      <div class="stat-icon">🍽️</div>
+      <div class="stat-value"><%= menuCount %></div>
+      <div class="stat-label">Menús en plataforma</div>
+      <div class="stat-source"><span class="nav-badge badge-mongo">MongoDB</span></div>
+    </a>
+    <a class="stat-card" href="/carrito">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-value"><%= carritoCount %></div>
+      <div class="stat-label">Carritos registrados</div>
+      <div class="stat-source"><span class="nav-badge badge-mongo">MongoDB</span></div>
+    </a>
+    <a class="stat-card" href="/cobros">
+      <div class="stat-icon">💳</div>
+      <div class="stat-value"><%= cobrosTotal %></div>
+      <div class="stat-label">Cobros registrados</div>
+      <div class="stat-source"><span class="nav-badge badge-oracle">Oracle</span></div>
+    </a>
+    <a class="stat-card" href="/restaurantes">
+      <div class="stat-icon">🏪</div>
+      <div class="stat-value"><%= restTotal %></div>
+      <div class="stat-label">Restaurantes</div>
+      <div class="stat-source"><span class="nav-badge badge-oracle">Oracle</span></div>
+    </a>
+  </div>
+ 
+  <div class="card">
+    <div class="card-header">
+      <span>🏗️</span>
+      <span class="card-title">Arquitectura de Persistencia Políglota</span>
+    </div>
+    <div class="arch-grid">
+      <div class="arch-item">
+        <div class="arch-db mongo">🍃 MongoDB — Datos Operacionales</div>
+        <div class="arch-col"><span>Menu</span><span class="arch-count"><%= menuCount %> docs</span></div>
+        <div class="arch-col"><span>Carrito</span><span class="arch-count"><%= carritoCount %> docs</span></div>
+        <div class="arch-col arch-note">Schema validation · TTL 2h · Text Index</div>
+      </div>
+      <div class="arch-item">
+        <div class="arch-db oracle">🔷 Oracle XE — Datos Financieros</div>
+        <div class="arch-col"><span>USUARIOS</span><span class="arch-count"><%= usrTotal %> rows</span></div>
+        <div class="arch-col"><span>RESTAURANTES</span><span class="arch-count"><%= restTotal %> rows</span></div>
+        <div class="arch-col"><span>COBROS_CLIENTES</span><span class="arch-count"><%= cobrosTotal %> rows</span></div>
+        <div class="arch-col arch-note">RBAC · Auditoría Unificada · 3FN</div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
